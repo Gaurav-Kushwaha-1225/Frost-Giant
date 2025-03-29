@@ -1,0 +1,53 @@
+version: "1.0"
+
+services:
+  ai-finetune-service:
+    image: fridaycode/your-ai-finetune-image:latest
+    expose:
+      - port: 5000
+        as: 5000
+        to:
+          - global: true
+    # env:
+      # - ENV_VAR_NAME=your_value
+
+profiles:
+  name: ai-finetune-service
+  duration: 1h
+  mode: fizz
+  tier:
+    - community
+  compute:
+    ai-finetune-service:
+      resources:
+        cpu:
+          units: 8
+        memory:
+          size: 16Gi
+        storage:
+          size: 50Gi
+        gpu:
+          units: 1
+          attributes:
+            vendor:
+              nvidia:
+                - model: rtx4090
+                # - model: t4
+                # - interface: "pci"
+          # memory:
+          #   size: 40Gi
+
+  placement:
+    westcoast:
+      attributes:
+        region: us-west
+      pricing:
+        ai-finetune-service:
+          amount: 1
+          token: CST
+
+deployment:
+  ai-finetune-service:
+    westcoast:
+      profile: ai-finetune-service
+      count: 1

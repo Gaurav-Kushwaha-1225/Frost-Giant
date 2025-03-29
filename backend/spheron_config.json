@@ -1,0 +1,11 @@
+{
+    "provider": "spheron",
+    "project": "AI-FineTuning",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "deploy": {
+      "expose": 5000
+    }
+  }
+  
